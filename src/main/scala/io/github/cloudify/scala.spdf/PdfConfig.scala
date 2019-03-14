@@ -14,6 +14,8 @@ trait PdfConfig {
    */
 
   val allow = Parameter[Iterable[String]]("allow")
+  
+  val cookie = Parameter[CookieParameter]("cookie")
 
   val defaultHeader = Parameter[Boolean]("default-header")
 
@@ -175,6 +177,7 @@ object PdfConfig {
     import config._
     Seq(
       allow.toParameter,
+      cookie.toParameter,
       background.toParameter,
       defaultHeader.toParameter,
       disableExternalLinks.toParameter,
