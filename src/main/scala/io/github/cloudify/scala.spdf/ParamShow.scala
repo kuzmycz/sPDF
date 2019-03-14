@@ -22,6 +22,11 @@ object ParamShow {
     }
   }
 
+  implicit object CookieParamShow extends ParamShow[CookieParameter] {
+    override def show(name: String, value: CookieParameter): Iterable[String] = 
+      formatParam(name, Seq(value.name, value.cookie))
+  }
+
   implicit object IterableParamShow extends ParamShow[Iterable[String]] {
     override def show(name: String, value: Iterable[String]): Iterable[String] = {
       value flatMap (x => formatParam(name, Some(x)))
@@ -47,6 +52,9 @@ object ParamShow {
     override def show(name: String, value: PageOrientation): Iterable[String] =
       formatParam(name, Some(value.value))
   }
+
+  private def formatParam(name: String, value: Seq[String]): Iterable[String] =
+    Seq(Some("--" + name), value).flatten
 
   private def formatParam(name: String, value: Option[String]): Iterable[String] =
     Seq(Some("--" + name), value).flatten
